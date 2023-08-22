@@ -16,6 +16,16 @@ projects:
     remotes:
       origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1.git
 
+- name: demo2
+  git:
+    remotes:
+      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1.git
+
+- name: demo3
+  git:
+    remotes:
+      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1.git
+
 components:
   - name: tools
     container:
@@ -56,6 +66,8 @@ components:
           value: '5001'
         - name: WALKTHROUGH_LOCATIONS
           value: >-
+            https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/labs,
+            https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/labs,
             https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/labs
       endpoints:
         - name: tutorial
