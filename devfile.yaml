@@ -67,8 +67,8 @@ components:
         - name: WALKTHROUGH_LOCATIONS
           value: >-
             https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/labs,
-            https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/labs,
-            https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/labs
+            https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/labs/../labs,
+            https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/../docs/labs
       endpoints:
         - name: tutorial
           exposure: public
