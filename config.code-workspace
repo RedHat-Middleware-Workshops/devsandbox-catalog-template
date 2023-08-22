@@ -1,13 +1,7 @@
 {
 	"folders": [
 		{
-			"path": "../testche"
-		},
-		{
-			"path": "../camel-workshop"
-		},
-		{
-			"path": "../sandbox-camel"
+			"path": "../demo1"
 		}
 	]
 }

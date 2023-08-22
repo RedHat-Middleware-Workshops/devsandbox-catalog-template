@@ -9,72 +9,14 @@ projects:
 - name: catalog
   git:
     remotes:
-      origin: https://github.com/brunoNetId/testcatalog.git
+      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-catalog-test.git
 
-- name: testche
+- name: demo1
   git:
     remotes:
-      origin: https://github.com/brunoNetId/testche.git
-
-- name: camel-workshop
-  git:
-    remotes:
-      origin: https://github.com/RedHat-Middleware-Workshops/workshop-camel3.git
-
-- name: sandbox-camel
-  git:
-    remotes:
-      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-camel.git
+      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1.git
 
 components:
-#   - name: tools
-#     container:
-#       image: quay.io/devfile/universal-developer-image:ubi8-0e189d9
-#       memoryLimit: 3Gi
-#       endpoints:
-#         - exposure: none
-#           name: debug
-#           protocol: tcp
-#           targetPort: 5005
-#         - exposure: public
-#           name: 8080-tcp
-#           protocol: http
-#           targetPort: 8080
-#       volumeMounts:
-#         - name: m2
-#           path: /home/user/.m2
-
-
-  # - name: dev-tools
-  #   container: 
-  #     image: quay.io/cgruver0/che/che-demo-app:latest
-  #     memoryRequest: 1Gi
-  #     memoryLimit: 6Gi
-  #     cpuRequest: 500m
-  #     cpuLimit: 2000m
-  #     mountSources: true
-  #     sourceMapping: /projects
-  #     env:
-  #     - name: SHELL
-  #       value: "/bin/zsh"
-  #     - name: TESTCONTAINERS_RYUK_DISABLED
-  #       value: "true"
-  #     - name: TESTCONTAINERS_CHECKS_DISABLE
-  #       value: "true"
-  #     - name: DOCKER_HOST
-  #       value: "tcp://127.0.0.1:2475"
-  #     - name: VSCODE_DEFAULT_WORKSPACE
-  #       value: "/projects/che-demo-app/che-demo.code-workspace"
-  #     volumeMounts:
-  #     - name: m2
-  #       path: /home/user/.m2
-  #     - name: npm
-  #       path: /home/user/.npm
-  #     endpoints:
-  #       - name: kubedock
-  #         targetPort: 2475
-  #         exposure: none
-
   - name: tools
     container:
       image: quay.io/redhatintegration/rhi-tools:devspaces
@@ -114,11 +56,9 @@ components:
           value: '5001'
         - name: WALKTHROUGH_LOCATIONS
           value: >-
-            https://github.com/brunoNetId/testche?walkthroughsFolder=/docs/catalog&walkthroughsFolder=/docs/labs,
-            https://github.com/RedHat-Middleware-Workshops/workshop-camel3?walkthroughsFolder=/docs/labs,
-            https://github.com/RedHat-Middleware-Workshops/devsandbox-camel?walkthroughsFolder=/docs/labs
+            https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/labs
       endpoints:
-        - name: all
+        - name: tutorial
           exposure: public
           targetPort: 5001
           protocol: https
@@ -129,68 +69,10 @@ components:
         - name: tutorial-storage
           path: /opt/user-walkthroughs
 
-  # - name: webapp-testche
-  #   container:
-  #     image: quay.io/redhatintegration/tutorial-web-app:latest
-  #     env:
-  #       - name: NODE_ENV
-  #         value: production
-  #       - name: THREESCALE_WILDCARD_DOMAIN
-  #         value: local.localdomain
-  #       - name: OPENSHIFT_VERSION
-  #         value: '4'
-  #       - name: PORT
-  #         value: '5002'
-  #       - name: WALKTHROUGH_LOCATIONS
-  #         value: >-
-  #           https://github.com/brunoNetId/testche?walkthroughsFolder=/docs/labs#test1
-  #     endpoints:
-  #       - name: testche
-  #         exposure: public
-  #         targetPort: 5002
-  #         protocol: https
-  #         secure: true
-  #     memoryLimit: 512Mi
-  #     mountSources: true
-  #     volumeMounts:
-  #       - name: tutorial-storage
-  #         path: /opt/user-walkthroughs
-
-
-  # - name: webapp-camel-workshop
-  #   container:
-  #     image: quay.io/redhatintegration/tutorial-web-app:latest
-  #     env:
-  #       - name: NODE_ENV
-  #         value: production
-  #       - name: THREESCALE_WILDCARD_DOMAIN
-  #         value: local.localdomain
-  #       - name: OPENSHIFT_VERSION
-  #         value: '4'
-  #       - name: PORT
-  #         value: '5003'
-  #       - name: WALKTHROUGH_LOCATIONS
-  #         value: >-
-  #           https://github.com/RedHat-Middleware-Workshops/workshop-camel3?walkthroughsFolder=/docs/labs
-  #     endpoints:
-  #       - name: camel-workshop
-  #         exposure: public
-  #         targetPort: 5003
-  #         protocol: https
-  #         secure: true
-  #     memoryLimit: 512Mi
-  #     mountSources: true
-  #     volumeMounts:
-  #       - name: tutorial-storage
-  #         path: /opt/user-walkthroughs
 
   - name: m2
     volume:
       size: 2Gi
-
-  - volume:
-      size: 2Gi
-    name: npm
 
   - name: tutorial-storage
     volume:
