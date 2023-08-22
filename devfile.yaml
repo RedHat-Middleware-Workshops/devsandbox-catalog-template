@@ -1,0 +1,225 @@
+schemaVersion: 2.2.0
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+metadata:
+  name: devsandbox-camel-catalog
+
+projects:
+
+- name: catalog
+  git:
+    remotes:
+      origin: https://github.com/brunoNetId/testcatalog.git
+
+- name: testche
+  git:
+    remotes:
+      origin: https://github.com/brunoNetId/testche.git
+
+- name: camel-workshop
+  git:
+    remotes:
+      origin: https://github.com/RedHat-Middleware-Workshops/workshop-camel3.git
+
+- name: sandbox-camel
+  git:
+    remotes:
+      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-camel.git
+
+components:
+#   - name: tools
+#     container:
+#       image: quay.io/devfile/universal-developer-image:ubi8-0e189d9
+#       memoryLimit: 3Gi
+#       endpoints:
+#         - exposure: none
+#           name: debug
+#           protocol: tcp
+#           targetPort: 5005
+#         - exposure: public
+#           name: 8080-tcp
+#           protocol: http
+#           targetPort: 8080
+#       volumeMounts:
+#         - name: m2
+#           path: /home/user/.m2
+
+
+  # - name: dev-tools
+  #   container: 
+  #     image: quay.io/cgruver0/che/che-demo-app:latest
+  #     memoryRequest: 1Gi
+  #     memoryLimit: 6Gi
+  #     cpuRequest: 500m
+  #     cpuLimit: 2000m
+  #     mountSources: true
+  #     sourceMapping: /projects
+  #     env:
+  #     - name: SHELL
+  #       value: "/bin/zsh"
+  #     - name: TESTCONTAINERS_RYUK_DISABLED
+  #       value: "true"
+  #     - name: TESTCONTAINERS_CHECKS_DISABLE
+  #       value: "true"
+  #     - name: DOCKER_HOST
+  #       value: "tcp://127.0.0.1:2475"
+  #     - name: VSCODE_DEFAULT_WORKSPACE
+  #       value: "/projects/che-demo-app/che-demo.code-workspace"
+  #     volumeMounts:
+  #     - name: m2
+  #       path: /home/user/.m2
+  #     - name: npm
+  #       path: /home/user/.npm
+  #     endpoints:
+  #       - name: kubedock
+  #         targetPort: 2475
+  #         exposure: none
+
+  - name: tools
+    container:
+      image: quay.io/redhatintegration/rhi-tools:devspaces
+      memoryLimit: 3Gi
+      env:
+        - name: MAVEN_CONFIG
+          value: ""
+        - name: JAVA_OPTS
+          value: "-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10
+            -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90
+            -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom
+            -Duser.home=/home/user"
+        - name: MAVEN_OPTS
+          value: $(JAVA_OPTS)
+        - name: VSCODE_DEFAULT_WORKSPACE
+          value: "/projects/catalog/config.code-workspace"
+      endpoints:
+        - exposure: public
+          name: 8080-tcp
+          protocol: http
+          targetPort: 8080
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+
+  - name: webapp-all
+    container:
+      image: quay.io/redhatintegration/tutorial-web-app:latest
+      env:
+        - name: NODE_ENV
+          value: production
+        - name: THREESCALE_WILDCARD_DOMAIN
+          value: local.localdomain
+        - name: OPENSHIFT_VERSION
+          value: '4'
+        - name: PORT
+          value: '5001'
+        - name: WALKTHROUGH_LOCATIONS
+          value: >-
+            https://github.com/brunoNetId/testche?walkthroughsFolder=/docs/catalog&walkthroughsFolder=/docs/labs,
+            https://github.com/RedHat-Middleware-Workshops/workshop-camel3?walkthroughsFolder=/docs/labs,
+            https://github.com/RedHat-Middleware-Workshops/devsandbox-camel?walkthroughsFolder=/docs/labs
+      endpoints:
+        - name: all
+          exposure: public
+          targetPort: 5001
+          protocol: https
+          secure: true
+      memoryLimit: 512Mi
+      mountSources: true
+      volumeMounts:
+        - name: tutorial-storage
+          path: /opt/user-walkthroughs
+
+  # - name: webapp-testche
+  #   container:
+  #     image: quay.io/redhatintegration/tutorial-web-app:latest
+  #     env:
+  #       - name: NODE_ENV
+  #         value: production
+  #       - name: THREESCALE_WILDCARD_DOMAIN
+  #         value: local.localdomain
+  #       - name: OPENSHIFT_VERSION
+  #         value: '4'
+  #       - name: PORT
+  #         value: '5002'
+  #       - name: WALKTHROUGH_LOCATIONS
+  #         value: >-
+  #           https://github.com/brunoNetId/testche?walkthroughsFolder=/docs/labs#test1
+  #     endpoints:
+  #       - name: testche
+  #         exposure: public
+  #         targetPort: 5002
+  #         protocol: https
+  #         secure: true
+  #     memoryLimit: 512Mi
+  #     mountSources: true
+  #     volumeMounts:
+  #       - name: tutorial-storage
+  #         path: /opt/user-walkthroughs
+
+
+  # - name: webapp-camel-workshop
+  #   container:
+  #     image: quay.io/redhatintegration/tutorial-web-app:latest
+  #     env:
+  #       - name: NODE_ENV
+  #         value: production
+  #       - name: THREESCALE_WILDCARD_DOMAIN
+  #         value: local.localdomain
+  #       - name: OPENSHIFT_VERSION
+  #         value: '4'
+  #       - name: PORT
+  #         value: '5003'
+  #       - name: WALKTHROUGH_LOCATIONS
+  #         value: >-
+  #           https://github.com/RedHat-Middleware-Workshops/workshop-camel3?walkthroughsFolder=/docs/labs
+  #     endpoints:
+  #       - name: camel-workshop
+  #         exposure: public
+  #         targetPort: 5003
+  #         protocol: https
+  #         secure: true
+  #     memoryLimit: 512Mi
+  #     mountSources: true
+  #     volumeMounts:
+  #       - name: tutorial-storage
+  #         path: /opt/user-walkthroughs
+
+  - name: m2
+    volume:
+      size: 2Gi
+
+  - volume:
+      size: 2Gi
+    name: npm
+
+  - name: tutorial-storage
+    volume:
+      size: 256Mi
+
+commands:
+  - id: run-stub
+    exec:
+      commandLine: JAVA_HOME=$JAVA_HOME_11 mvn -Dspring-boot.run.profiles=dev -s configuration/settings.xml
+      component: tools
+      workingDir: "${PROJECT_SOURCE}/stubs/end1"
+
+  - id: run-main
+    exec:
+      commandLine: JAVA_HOME=$JAVA_HOME_11 mvn -Dspring-boot.run.profiles=dev -s configuration/settings.xml
+      component: tools
+      workingDir: "${PROJECT_SOURCE}/level1simple"
+
+  - id: send-request
+    exec:
+      commandLine: >-
+        curl -H 'content-type: application/json' -d '{"id":"123"}' http://localhost:8080/camel/subscriber/details
+      component: tools
+      workingDir: "${PROJECT_SOURCE}"
+
+  - id: debug-services
+    exec:
+      commandLine: |
+        JAVA_HOME=$JAVA_HOME_8 mvn spring-boot:run -DskipTests \
+        -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
+      component: tools
+      workingDir: "${PROJECT_SOURCE}"
