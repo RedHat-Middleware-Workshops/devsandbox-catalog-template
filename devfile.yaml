@@ -19,12 +19,7 @@ projects:
 - name: demo2
   git:
     remotes:
-      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1.git
-
-- name: demo3
-  git:
-    remotes:
-      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1.git
+      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo2.git
 
 components:
   - name: tools
@@ -67,8 +62,8 @@ components:
         - name: WALKTHROUGH_LOCATIONS
           value: >-
             https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/labs,
-            https://github.com/RedHat-Middleware-Workshops/devsandbox-camel?walkthroughsFolder=/docs/labs,
-            https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo1?walkthroughsFolder=/docs/../docs/labs
+            https://github.com/RedHat-Middleware-Workshops/devsandbox-category-demo2?walkthroughsFolder=/docs/labs,
+            https://github.com/RedHat-Middleware-Workshops/devsandbox-camel?walkthroughsFolder=/docs/labs
       endpoints:
         - name: tutorial
           exposure: public
