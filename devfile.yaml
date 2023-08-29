@@ -9,7 +9,7 @@ projects:
 - name: catalog
   git:
     remotes:
-      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-catalog-test.git
+      origin: https://github.com/RedHat-Middleware-Workshops/devsandbox-catalog-demo.git
 
 - name: demo1
   git:
